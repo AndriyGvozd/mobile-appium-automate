@@ -25,30 +25,14 @@ This repository includes GitHub Actions workflows for automated testing with App
 - Generates and uploads Allure reports
 - Artifacts: `allure-report-android`, `test-results-android`
 
-#### `test-browserstack-ios`
-- Runs on: Ubuntu Latest
-- Executes iOS tests on BrowserStack
-- Generates and uploads Allure reports
-- Artifacts: `allure-report-ios`, `test-results-ios`
-
 #### `publish-reports`
 - Runs on: Ubuntu Latest
-- Merges test reports from Android and iOS
-- Publishes to GitHub Pages (only on `main` branch)
-- Reports available at: `https://<username>.github.io/<repo>/test-reports/`
+- Publishes the Android Allure report to GitHub Pages (only on `main` branch)
+- Reports available at: `https://<username>.github.io/<repo>/`
 
-### 2. `browserstack.yml` - Legacy BrowserStack Tests
-
-**Purpose**: Simplified BrowserStack Android testing workflow.
-
-**Triggers**:
-- Push to `main` or `master` branches
-- Pull requests to `main` or `master` branches
-
-**Features**:
-- Runs on: macOS Latest
-- Android tests only
-- Publishes Allure reports to GitHub Pages
+> This project only targets Android (Wikipedia app). The iOS job and the
+> legacy `browserstack.yml` workflow from the original boilerplate were
+> removed — add them back if an iOS build is introduced later.
 
 ## Required Secrets
 
@@ -59,7 +43,6 @@ Configure these secrets in your repository settings (`Settings > Secrets and var
 | `BROWSERSTACK_USERNAME` | BrowserStack account username | All tests |
 | `BROWSERSTACK_ACCESS_KEY` | BrowserStack access key | All tests |
 | `BROWSERSTACK_ANDROID_APP_ID` | Android app ID (e.g., `bs://abc123`) | Android tests |
-| `BROWSERSTACK_IOS_APP_ID` | iOS app ID (e.g., `bs://xyz789`) | iOS tests |
 
 ### How to Get BrowserStack App IDs
 
@@ -77,7 +60,7 @@ Configure these secrets in your repository settings (`Settings > Secrets and var
    }
    ```
 
-3. Add this as `BROWSERSTACK_ANDROID_APP_ID` or `BROWSERSTACK_IOS_APP_ID` in GitHub Secrets.
+3. Add this as `BROWSERSTACK_ANDROID_APP_ID` in GitHub Secrets.
 
 ## Key Features
 
@@ -93,7 +76,6 @@ Configure these secrets in your repository settings (`Settings > Secrets and var
 
 ### Artifact Management
 - Test reports retained for 30 days
-- Separate artifacts for Android and iOS results
 - Automatic Allure report generation
 
 ## Workflow Diagram
@@ -110,16 +92,12 @@ Configure these secrets in your repository settings (`Settings > Secrets and var
 │  - Code quality checks                   │
 └──────────────┬───────────────────────────┘
                │
-      ┌────────┴────────┐
-      │                 │
-      ▼                 ▼
-┌─────────────┐  ┌─────────────┐
-│  Android    │  │  iOS Tests  │
-│  Tests      │  │  (parallel) │
-└──────┬──────┘  └──────┬──────┘
-       │                │
-       └────────┬───────┘
-                ▼
+               ▼
+      ┌─────────────────┐
+      │  Android Tests  │
+      └────────┬────────┘
+               │
+               ▼
    ┌────────────────────────┐
    │  Publish Reports       │
    │  (only on main branch) │
@@ -143,7 +121,6 @@ npx appium driver list
 
 # Run tests (requires .env file with BrowserStack credentials)
 npm run test:android:bs
-npm run test:ios:bs
 
 # Generate Allure report
 npm run allure:generate
