@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","16749","should open the Search tab from the bottom navigation","Wikipedia app navigation","Mon Sep 21 12:23:52 UTC 2026","passed","Mon Sep 21 12:24:09 UTC 2026","","","",""
+"","24180","should show the ""save to collections"" dialog when saving an article","Wikipedia app save article","Mon Sep 21 12:26:18 UTC 2026","passed","Mon Sep 21 12:26:42 UTC 2026","","","",""
+"","23027","should open an article after tapping a search result","Wikipedia app article view","Mon Sep 21 12:25:21 UTC 2026","passed","Mon Sep 21 12:25:44 UTC 2026","","","",""
+"","18069","should return search results when searching for ""London""","Wikipedia app search","Mon Sep 21 12:27:14 UTC 2026","passed","Mon Sep 21 12:27:33 UTC 2026","","","",""
+"","9438","should show the welcome screen and lead to the Explore feed after completing onboarding","Wikipedia app onboarding","Mon Sep 21 12:24:39 UTC 2026","passed","Mon Sep 21 12:24:48 UTC 2026","","","",""

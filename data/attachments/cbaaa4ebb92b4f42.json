@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "(//*[@resource-id=\"org.wikipedia:id/fragment_search_results\"]//android.widget.TextView)[1]"
+}
