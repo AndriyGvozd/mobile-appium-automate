@@ -24,7 +24,9 @@ export const config = {
           'browserstack',
           {
             app: process.env.BROWSERSTACK_ANDROID_APP_ID,
-            buildIdentifier: "${BUILD_NUMBER}",
+            buildIdentifier: process.env.GITHUB_RUN_NUMBER
+              ? `CI-${process.env.GITHUB_RUN_NUMBER}`
+              : `local-${new Date().toISOString().replace(/[:.]/g, '-')}`,
             browserstackLocal: false,
             testObservability: true,
             testObservabilityOptions: {
