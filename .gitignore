@@ -70,3 +70,4 @@ out
 allure-results
 appium.log
 .claude/
+.DS_Store

@@ -61,11 +61,12 @@ jobs:
           echo "BROWSERSTACK_USERNAME=${{ secrets.BROWSERSTACK_USERNAME }}" >> .env
           echo "BROWSERSTACK_ACCESS_KEY=${{ secrets.BROWSERSTACK_ACCESS_KEY }}" >> .env
           echo "BROWSERSTACK_ANDROID_APP_ID=${{ secrets.BROWSERSTACK_ANDROID_APP_ID }}" >> .env
-          echo "BROWSERSTACK_IOS_APP_ID=${{ secrets.BROWSERSTACK_IOS_APP_ID }}" >> .env
 
       - name: Run Android tests on BrowserStack
-        run: npm run test:android:bs 2>&1 | tee test-output.log
-        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:android:bs 2>&1 | tee test-output.log
 
       - name: Add BrowserStack build link to summary
         if: always()

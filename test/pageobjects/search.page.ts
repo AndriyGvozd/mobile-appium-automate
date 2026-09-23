@@ -57,11 +57,30 @@ class SearchPage extends Page {
     return this.getElementText(firstResultTitle);
   }
 
+  /**
+   * Search results stream in incrementally as the query resolves, so the
+   * row at index 1 can be replaced mid-click (causing a stale element
+   * error). Wait until the result count stops changing across consecutive
+   * checks before treating the list as settled.
+   */
+  public async waitUntilResultsStable(timeout: number = 8000): Promise<void> {
+    let lastCount = -1;
+    let stableChecks = 0;
+
+    await browser.waitUntil(async () => {
+      const count = await this.getResultsCount();
+      stableChecks = count > 0 && count === lastCount ? stableChecks + 1 : 0;
+      lastCount = count;
+      return stableChecks >= 2;
+    }, {
+      timeout,
+      timeoutMsg: 'Search results list did not stabilize in time',
+      interval: 500
+    });
+  }
+
   public async openFirstResult(): Promise<void> {
-    // Search results stream in incrementally; let the list settle before
-    // tapping the first row so we don't click an item that's about to be
-    // replaced (causing a stale element error).
-    await browser.pause(1500);
+    await this.waitUntilResultsStable();
     await this.clickElement(firstResultTitle);
   }
 }

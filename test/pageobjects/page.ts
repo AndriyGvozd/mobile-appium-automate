@@ -374,9 +374,5 @@ export default class Page {
       return screenshotPath;
     }
 
-    // async getOrientation(): Promise<'PORTRAIT' | 'LANDSCAPE'> {
-    //   return await browser.getOrientation();
-    // }
-
   }
   

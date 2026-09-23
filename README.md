@@ -1,7 +1,7 @@
 
-# e2e-tests: WebdriverIO v9, Appium v3, Hybrid App (Android & iOS), BrowserStack
+# e2e-tests: WebdriverIO v9, Appium v3, Wikipedia Android app, BrowserStack
 
-Template for end-to-end testing with hybrid mobile applications.
+End-to-end tests for the official Wikipedia Android app, running locally via Appium and on BrowserStack App Automate.
 
 ## Setup
 
@@ -16,10 +16,9 @@ Template for end-to-end testing with hybrid mobile applications.
    ```sh
    npm install -g appium@latest
    ```
-7. Install necessary Appium drivers:
+7. Install the necessary Appium driver:
    ```sh
    appium driver install uiautomator2
-   appium driver install xcuitest
    ```
 
 ## BrowserStack Configuration
@@ -28,8 +27,7 @@ Template for end-to-end testing with hybrid mobile applications.
    - `BROWSERSTACK_USERNAME`
    - `BROWSERSTACK_ACCESS_KEY`
    - `BROWSERSTACK_ANDROID_APP_ID`
-   - `BROWSERSTACK_IOS_APP_ID`
-2. Sign in to [BrowserStack](https://www.browserstack.com/), upload your mobile app files (`.apk` for Android and `.ipa` for iOS), and note the app IDs.
+2. Sign in to [BrowserStack](https://www.browserstack.com/), upload the Wikipedia `.apk`, and note the app ID.
 3. Update the `.env` file with your credentials and app IDs.
 4. Run the Android tests with BrowserStack using:
    ```sh
@@ -49,10 +47,9 @@ To run Android tests on a Windows machine, ensure the following setup:
    npm install -g appium@latest
    ```
 6. Download [Appium Inspector](https://github.com/appium/appium-inspector/releases) (latest version compatible with Appium 3).
-7. Install necessary Appium drivers:
+7. Install the necessary Appium driver:
    ```sh
    appium driver install uiautomator2
-   appium driver install xcuitest
    ```
 8. Enable virtualization in BIOS ([video tutorial](https://www.youtube.com/watch?v=UgDxU0jZAe4)).
 9. Connect an Android device to your computer with USB debugging enabled.
@@ -67,36 +64,7 @@ To run Android tests on a Windows machine, ensure the following setup:
     ```
 13. Open Appium Inspector and connect it to your device to interact with your apps.
 
-### Running iOS Tests
-
-To run iOS tests with BrowserStack or locally, ensure the following setup:
-
-1. Install Xcode (version 12 or higher) from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835).
-2. Configure Xcode Command Line Tools by selecting **Xcode > Preferences > Locations** and ensuring the Command Line Tools dropdown is set to the Xcode version.
-3. Install [CocoaPods](https://cocoapods.org/) (if not already installed) for dependency management:
-   ```sh
-   sudo gem install cocoapods
-   ```
-4. Set up Appium for iOS testing:
-   ```sh
-   npm install -g appium@latest
-   appium driver install xcuitest
-   ```
-5. Connect an iOS device via USB and enable **Developer Mode** on the device (found in **Settings > Privacy & Security > Developer Mode** on iOS 16+).
-6. In the iOS configuration file (`config/wdio.ios.conf.js`), specify `platformVersion`, `deviceName`, and the path to the `.ipa` file.
-7. Start Appium server:
-   ```sh
-   appium
-   ```
-8. Use Appium Inspector to verify that the setup works and to locate UI elements on your iOS app.
-
-### Running iOS Tests on BrowserStack
-
-1. Ensure that the `.env` file contains `BROWSERSTACK_IOS_APP_ID` along with your BrowserStack credentials (`BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`).
-2. Run iOS tests on BrowserStack with the following command:
-   ```sh
-   npm run test:ios:bs
-   ```
+> **Note:** This project only targets Android (the Wikipedia app). It has no iOS build, so iOS configs and setup steps aren't included.
 
 ### Linter
 
@@ -129,7 +97,7 @@ This is usually caused by:
 **Symptoms:** `Element could not be located` or `NoSuchElementError`
 
 **Solutions:**
-- Verify element locators are correct for both Android and iOS
+- Verify element locators are correct for Android
 - Use Appium Inspector to confirm element selectors
 - Check if app needs time to load after navigation
 - Ensure elements are within viewport (scroll if needed)
@@ -229,7 +197,6 @@ curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
    
    # Run tests with connection health check
    npm run test:android:reliable
-   npm run test:ios:reliable
    
    # Manual health check and recovery
    npm run appium:health
@@ -297,7 +264,7 @@ All test actions are logged with:
 1. Start Appium server: `appium`
 2. Open Appium Inspector
 3. Configure connection:
-   - Remote Path: `/wd/hub`
+   - Remote Path: `/` (Appium 3 no longer uses `/wd/hub`)
    - Desired Capabilities from config file
 4. Start session to manually inspect elements
 

@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config(); // Load environment variables from .env file
 
 const screenshotDir = path.join(process.cwd(), 'allure-results', 'screenshots');
-// Создание директории для скриншотов, если она не существует
+// Create the screenshots directory if it doesn't exist
 if (!fs.existsSync(screenshotDir)) {
     fs.mkdirSync(screenshotDir, { recursive: true });
 }
@@ -165,14 +165,6 @@ export const config = {
         ['allure', {outputDir: './reporters/allure-results',
             disableWebdriverStepsReporting: false,
             disableWebdriverScreenshotsReporting: false,}]
-
-
-        // ['allure', {
-        //     outputDir: 'allure-results',
-        //     disableWebdriverStepsReporting: false, // Включение шагов WebDriver
-        //     disableWebdriverScreenshotsReporting: false,
-        //     useCucumberStepReporter: false,
-        // }],
     ],
 
     

@@ -29,6 +29,21 @@ class OnboardingPage extends Page {
   }
 
   /**
+   * Waits for the next onboarding screen to actually render (either
+   * another "Forward" screen or the final "Skip" screen) instead of a
+   * fixed delay after tapping Forward.
+   */
+  private async waitUntilNextScreenReady(timeout: number = 5000): Promise<void> {
+    await browser.waitUntil(async () => {
+      return (await this.isElementDisplayed(nextButton)) || (await this.isSkipButtonDisplayed());
+    }, {
+      timeout,
+      timeoutMsg: 'Next onboarding screen did not render in time',
+      interval: 200
+    });
+  }
+
+  /**
    * Wikipedia shows a multi-step onboarding on first launch (welcome ->
    * data & privacy -> interests). Number of intermediate screens can vary,
    * so keep tapping Forward until the final Skip button appears.
@@ -42,7 +57,7 @@ class OnboardingPage extends Page {
         break;
       }
       await this.clickNext();
-      await browser.pause(500);
+      await this.waitUntilNextScreenReady();
     }
 
     await this.skipOnboarding();
